@@ -22,8 +22,14 @@
 */
 function _canvasPenJS_click(canvas,rgba,w,plot){
   //============================================================================
-  var slf=window,cvs=slf.document.getElementById(canvas.id),I=0,n=0,c,x,y,
+  var slf=window,cvs=slf.document.getElementById(canvas.id),I=0,n=0,c,x,y,Rect,
       evnt=[['mousedown','mouseup','mousemove','mouseout'],['click']];
+  //relative position of the canvas to the viewport
+  Rect=!!cvs.getBoundingClientRect()?cvs.getBoundingClientRect():{top:0,left:0};
+  /* --- Reference ---
+  * -"MDN: Element.getBoundingClientRect()" derived on 2016-12-28 and from:
+  * https://developer.mozilla.org/en/docs/Web/API/Element/getBoundingClientRect
+  */
   //============================================================================
   if(!plot){
     //drawing
@@ -32,13 +38,13 @@ function _canvasPenJS_click(canvas,rgba,w,plot){
       if(!dr.d){dr.d=[false,0,0];}
       var D=dr.d;
       /*Event: mousedown*/
-      if(!(e.type!='mousedown')){D[0]=true,D[1]=e.clientX,D[2]=e.clientY;}
+      if(!(e.type!='mousedown')){D[0]=true,D[1]=e.clientX-Rect.left,D[2]=e.clientY-Rect.top;}
       /*Event: mouseup*/
       else if(!(e.type!='mouseup')){D[0]=false;}
       /*Event: mousemove|mouseout*/
       else if(!(e.type!='mousemove')||!(e.type!='mouseout')){
         if(D[0]){
-          x=e.clientX,y=e.clientY;
+          x=e.clientX-Rect.left,y=e.clientY-Rect.top;
           c=cvs.getContext('2d'),c.strokeStyle=rgba,c.lineWidth=w;
           c.beginPath(),c.moveTo(D[1],D[2]),c.lineTo(x,y),c.stroke();
           D[1]=x,D[2]=y;
@@ -53,7 +59,7 @@ function _canvasPenJS_click(canvas,rgba,w,plot){
     var plt=function(e){
       //e: event
       c=cvs.getContext('2d'),c.strokeStyle=rgba,c.lineWidth=w;
-      x=e.clientX,y=e.clientY;
+      x=e.clientX-Rect.left,y=e.clientY-Rect.top;
       c.strokeRect(x,y,1,1);
       //reset strokeStyle and lineWidth
       c.strokeStyle='rgba(0,0,0,1)',c.lineWidth=1;
