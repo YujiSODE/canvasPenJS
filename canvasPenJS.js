@@ -14,16 +14,17 @@
 <ToDo>
 * - plot can be a text: csv formatted pairs of values with @.
 * - a pair of values are expressed as x@y e.g., '1@2,10.5@100.31'.
-- x and y coordinates modified for css etc.
 - TouchEvent
+- minimum version
 </ToDo>
 * === returned value ===
-* function that removes the set drawing interface
+* function that removes the set drawing/plotting interface
+* and returns log object: {time:string,d:[]}.
 */
 function _canvasPenJS_click(canvas,rgba,w,plot){
   //============================================================================
-  var slf=window,cvs=slf.document.getElementById(canvas.id),I=0,n=0,c,x,y,Rect,
-      evnt=[['mousedown','mouseup','mousemove','mouseout'],['click']];
+  var slf=window,cvs=slf.document.getElementById(canvas.id),I=0,n=0,c,x=0,y=0,Rect,
+      log={time:0,d:[]},evnt=[['mousedown','mouseup','mousemove','mouseout'],['click']];
   //relative position of the canvas to the viewport
   Rect=!!cvs.getBoundingClientRect()?cvs.getBoundingClientRect():{top:0,left:0};
   /* --- Reference ---
@@ -38,9 +39,17 @@ function _canvasPenJS_click(canvas,rgba,w,plot){
       if(!dr.d){dr.d=[false,0,0];}
       var D=dr.d;
       /*Event: mousedown*/
-      if(!(e.type!='mousedown')){D[0]=true,D[1]=e.clientX-Rect.left,D[2]=e.clientY-Rect.top;}
+      if(!(e.type!='mousedown')){
+        D[0]=true,D[1]=e.clientX-Rect.left,D[2]=e.clientY-Rect.top;
+        //log.d is an array of plots, expressed with x and y coordinates: x@y.
+        log.d.push(D[1]+'@'+D[2]);
+      }
       /*Event: mouseup*/
-      else if(!(e.type!='mouseup')){D[0]=false;}
+      else if(!(e.type!='mouseup')){
+        D[0]=false,x=e.clientX-Rect.left,y=e.clientY-Rect.top;
+        //log.d is an array of plots, expressed with x and y coordinates: x@y.
+        log.d.push(x+'@'+y);
+      }
       /*Event: mousemove|mouseout*/
       else if(!(e.type!='mousemove')||!(e.type!='mouseout')){
         if(D[0]){
@@ -50,7 +59,11 @@ function _canvasPenJS_click(canvas,rgba,w,plot){
           D[1]=x,D[2]=y;
           //reset strokeStyle and lineWidth
           c.strokeStyle='rgba(0,0,0,1)',c.lineWidth=1;
-          if(!(e.type!='mouseout')){D[0]=false;}
+          if(!(e.type!='mouseout')){
+            D[0]=false;
+            //log.d is an array of plots, expressed with x and y coordinates: x@y.
+            log.d.push(x+'@'+y);
+          }
         }
       }
     };
@@ -61,6 +74,8 @@ function _canvasPenJS_click(canvas,rgba,w,plot){
       c=cvs.getContext('2d'),c.strokeStyle=rgba,c.lineWidth=w;
       x=e.clientX-Rect.left,y=e.clientY-Rect.top;
       c.strokeRect(x,y,1,1);
+      //log.d is an array of plots, expressed with x and y coordinates: x@y.
+      log.d.push(x+'@'+y);
       //reset strokeStyle and lineWidth
       c.strokeStyle='rgba(0,0,0,1)',c.lineWidth=1;
     };
@@ -69,24 +84,34 @@ function _canvasPenJS_click(canvas,rgba,w,plot){
   if(!plot){
     //drawing
     n=evnt[0].length,I=0;
+    log.d=[],log.time='drawing:'+slf.Date().replace(/\s/g,'_')+' to ';
     while(I<n){cvs.addEventListener(evnt[0][I],dr,true),I+=1;}
     //returned function
     return function(){
       cvs=slf.document.getElementById(canvas.id),I=0;
+      log.time+=slf.Date().replace(/\s/g,'_');
       while(I<n){cvs.removeEventListener(evnt[0][I],dr,true),I+=1;}
       //reset strokeStyle and lineWidth
+      if(!c){c=cvs.getContext('2d');}
       c.strokeStyle='rgba(0,0,0,1)',c.lineWidth=1;
+      //it returns log object.
+      return log;
     };
   }else{
     //plotting
-    n=evnt[1].length,I=0;
+    //n=evnt[1].length,I=0;
+    log.d=[],log.time='plotting:'+slf.Date().replace(/\s/g,'_')+' to ';
     cvs.addEventListener(evnt[1][0],plt,true);
     //returned function
     return function(){
       cvs=slf.document.getElementById(canvas.id);
+      log.time+=slf.Date().replace(/\s/g,'_');
       cvs.removeEventListener(evnt[1][0],plt,true);
       //reset strokeStyle and lineWidth
+      if(!c){c=cvs.getContext('2d');}
       c.strokeStyle='rgba(0,0,0,1)',c.lineWidth=1;
+      //it returns log object.
+      return log;
     };
   }
 }
