@@ -24,7 +24,7 @@
 function _canvasPenJS_click(canvas,rgba,w,plot){
   //============================================================================
   var slf=window,cvs=slf.document.getElementById(canvas.id),I=0,n=0,c,x=0,y=0,Rect,
-      log={time:0,d:[]},evnt=[['mousedown','mouseup','mousemove','mouseout'],['click']];
+      log={time:0,d:[]},evnt=[['mousedown','mouseup','mousemove','mouseout'],['mouseup']];
   //relative position of the canvas to the viewport
   Rect=!!cvs.getBoundingClientRect()?cvs.getBoundingClientRect():{top:0,left:0};
   /* --- Reference ---
