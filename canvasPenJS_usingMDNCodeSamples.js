@@ -25,7 +25,7 @@
 * function that removes the set drawing/plotting interface
 * and returns log object: {time:string,d:[]}.
 */
-function _canvasPenJS_click(canvas,rgba,w,plot){
+function _canvasPenJS(canvas,rgba,w,plot){
   //============================================================================
   var slf=window,cvs=slf.document.getElementById(canvas.id),I=0,n=0,c,x=0,y=0,Rect,
       log={time:0,d:[]},
@@ -88,7 +88,6 @@ function onTouch(evt) {
   evt.originalTarget.dispatchEvent(newEvt);
 }
   //== </Handling clicks with touch event: code samples from MDN> ==
-
   if(!plot){
     //drawing
     var dr=function(e){
@@ -160,7 +159,6 @@ function onTouch(evt) {
     };
   }else{
     //plotting
-    //n=evnt[1].length,I=0;
     log.d=[],log.time='plotting:'+slf.Date().replace(/\s/g,'_')+' to ';
     cvs.addEventListener(evnt[1][0],plt,true);
     //returned function
@@ -178,7 +176,7 @@ function onTouch(evt) {
 }
 //=== test examples ===
 //var d=window.document.getElementsByTagName('canvas')[0];
-//var Y=_canvasPenJS_click(d,'rgba(255,0,0,1)',2,false);
+//var Y=_canvasPenJS(d,'rgba(255,0,0,1)',2,false);
 //Y();
-//var Y=_canvasPenJS_click(d,'rgba(0,0,255,1)',10,true);
+//var Y=_canvasPenJS(d,'rgba(0,0,255,1)',10,true);
 //Y();
