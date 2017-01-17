@@ -1,5 +1,9 @@
-/*canvasPenJS.js
-*
+/*canvasPenJS_usingMDNCodeSamples.js
+* ======
+* some code samples for "Toutch events" were derived on 2017-01-16
+* and from "Touch events" by 2005-2017 Mozilla Developer Network (MDN)
+* and individual contributors.
+* ======
 *    Copyright (c) 2016 Yuji SODE <yuji.sode@gmail.com>
 *
 *    This software is released under the MIT License.
@@ -36,42 +40,53 @@ function _canvasPenJS(canvas,rgba,w,plot){
   * https://developer.mozilla.org/en/docs/Web/API/Element/getBoundingClientRect
   */
   //============================================================================
-  //== <Handling clicks with touch event> ==
-//this function simulates mouse event via touch event.
-function touch2MouseEvt(e){
-  //e is event object
-  e.preventDefault();
-  if(!!e.changedTouches&&e.changedTouches.length>0){
-    var touch0=null,
-        /*function simulates new mouse event*/
-        newMEvt=function(EventName,tObj,tgt){
-          //tObj and tgt are touch object and target element
-          var E=new MouseEvent(EventName,{
-            'view':window,
-            'bubbles':true,
-            'cancelable':true,
-            'clientX':tObj.clientX,
-            'clientY':tObj.clientY
-          });
-          tgt.dispatchEvent(E);
-        };
-    switch(e.type){
-      case 'touchstart':
-        touch0=e.changedTouches[0];
-        newMEvt('mousedown',touch0,e.target);
-        break;
-      case 'touchmove':
-        touch0=e.changedTouches[0];
-        newMEvt('mousemove',touch0,e.target);
-        break;
-      case 'touchend':
-        touch0=e.changedTouches[0];
-        newMEvt('mouseup',touch0,e.target);
-        break;
-    }
-  }else{return;}
+  //== <Handling clicks with touch event: code samples from MDN> ==
+  /* these code samples were derived on 2017-01-16 and from:
+  * "Additional tips/Handling clicks" in "Touch events"
+  * by 2005-2017 Mozilla Developer Network (MDN) and individual contributors:
+  * https://developer.mozilla.org/en/docs/Web/API/Touch_events
+  * the contributors to "Touch events":
+  * chrisdavidmills, andrew-luhring, Luke314, teoli, cassidoo, mrenty, AFBarstow,
+  * Sebastianz, ammist, TotalAMD, mnquintana, mkato, Sheppy, rschmidmeister, Changbin,
+  * maynarddemmon, Dotcom, Thomas-Brierley, jdawson, Jeremie, kscarfone, timothykim,
+  * kohei.yoshino, Gawi, Darbicus, robstar, avih, complynx, Brainversation, ethertank,
+  * foolip, Nickolay, MykMelez, GrapWhit3, openjck,arleytriana, freejosh, smeranda,
+  * julienw, oncletom, wesj, yahelc, MattBrubeck, jswisher
+  * ------
+  * Any copyright of These code samples from MDN is dedicated to the Public Domain.
+  * http://creativecommons.org/publicdomain/zero/1.0/
+  * ------
+  */
+function onTouch(evt) {
+  evt.preventDefault();
+  if (evt.touches.length > 1 || (evt.type == "touchend" && evt.touches.length > 0))
+    return;
+
+  var newEvt = document.createEvent("MouseEvents");
+  var type = null;
+  var touch = null;
+
+  switch (evt.type) {
+    case "touchstart": 
+      type = "mousedown";
+      touch = evt.changedTouches[0];
+      break;
+    case "touchmove":
+      type = "mousemove";
+      touch = evt.changedTouches[0];
+      break;
+    case "touchend":        
+      type = "mouseup";
+      touch = evt.changedTouches[0];
+      break;
+  }
+
+  newEvt.initMouseEvent(type, true, true, evt.originalTarget.ownerDocument.defaultView, 0,
+    touch.screenX, touch.screenY, touch.clientX, touch.clientY,
+    evt.ctrlKey, evt.altKey, evt.shiftKey, evt.metaKey, 0, null);
+  evt.originalTarget.dispatchEvent(newEvt);
 }
-  //== </Handling clicks with touch event> ==
+  //== </Handling clicks with touch event: code samples from MDN> ==
   if(!plot){
     //drawing
     var dr=function(e){
@@ -123,7 +138,7 @@ function touch2MouseEvt(e){
   //============================================================================
   //==
   cvs=slf.document.getElementById(canvas.id),n=evnt[2].length,I=0;
-  while(I<n){cvs.addEventListener(evnt[2][I],touch2MouseEvt,true),I+=1;}
+  while(I<n){cvs.addEventListener(evnt[2][I],onTouch,true),I+=1;}
   //==
   if(!plot){
     //drawing
