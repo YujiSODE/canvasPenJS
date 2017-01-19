@@ -23,7 +23,7 @@
 function _canvasPenJS(canvas,rgba,w,plot){
   //============================================================================
   var slf=window,cvs=slf.document.getElementById(canvas.id),I=0,n=0,c,x=0,y=0,Rect,
-      log={time:0,d:[]},
+      log={time:0,d:[],canvasId:canvas.id},
       evnt=[
         ['mousedown','mouseup','mousemove','mouseout'],
         ['mouseup'],
