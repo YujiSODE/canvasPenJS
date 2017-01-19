@@ -17,7 +17,7 @@
 * plot: true|false; true => plotting, false => drawing
 <ToDo>
 * - plot can be a text: csv formatted pairs of values with @.
-* - a pair of values are expressed as x@y e.g., '1@2,10.5@100.31'.
+* - a pair of values are expressed as "x@y" e.g., "1@2,10.5@100.31".
 - minimum version
 </ToDo>
 * === returned value ===
@@ -28,11 +28,15 @@ function _canvasPenJS(canvas,rgba,w,plot){
   //============================================================================
   var slf=window,cvs=slf.document.getElementById(canvas.id),I=0,n=0,c,x=0,y=0,Rect,
       log={time:0,d:[],canvasId:canvas.id},
+      /*a pair of values are expressed as "x@y" e.g., "1@2,10.5@100.31".*/
+      reg=/^(?:\+|\-)?[0-9]+(?:\.[0-9]+)?@(?:\+|\-)?[0-9]+(?:\.[0-9]+)?$/,
+      plotFlg,
       evnt=[
         ['mousedown','mouseup','mousemove','mouseout'],
         ['mouseup'],
         ['touchstart','touchmove','touchend']
       ];
+  plotFlg=reg.test(plot);console.log(plotFlg);
   //relative position of the canvas to the viewport
   Rect=!!cvs.getBoundingClientRect()?cvs.getBoundingClientRect():{top:0,left:0};
   /* --- Reference ---
@@ -96,13 +100,13 @@ function onTouch(evt) {
       /*Event: mousedown*/
       if(!(e.type!='mousedown')){
         D[0]=true,D[1]=e.clientX-Rect.left,D[2]=e.clientY-Rect.top;
-        //log.d is an array of plots, expressed with x and y coordinates: x@y.
+        //log.d is an array of plots, expressed with x and y coordinates: "x@y".
         log.d.push(D[1]+'@'+D[2]);
       }
       /*Event: mouseup*/
       else if(!(e.type!='mouseup')){
         D[0]=false,x=e.clientX-Rect.left,y=e.clientY-Rect.top;
-        //log.d is an array of plots, expressed with x and y coordinates: x@y.
+        //log.d is an array of plots, expressed with x and y coordinates: "x@y".
         log.d.push(x+'@'+y);
       }
       /*Event: mousemove|mouseout*/
@@ -116,7 +120,7 @@ function onTouch(evt) {
           c.strokeStyle='rgba(0,0,0,1)',c.lineWidth=1;
           if(!(e.type!='mouseout')){
             D[0]=false;
-            //log.d is an array of plots, expressed with x and y coordinates: x@y.
+            //log.d is an array of plots, expressed with x and y coordinates: "x@y".
             log.d.push(x+'@'+y);
           }
         }
@@ -129,7 +133,7 @@ function onTouch(evt) {
       c=cvs.getContext('2d'),c.strokeStyle=rgba,c.lineWidth=w;
       x=e.clientX-Rect.left,y=e.clientY-Rect.top;
       c.strokeRect(x,y,1,1);
-      //log.d is an array of plots, expressed with x and y coordinates: x@y.
+      //log.d is an array of plots, expressed with x and y coordinates: "x@y".
       log.d.push(x+'@'+y);
       //reset strokeStyle and lineWidth
       c.strokeStyle='rgba(0,0,0,1)',c.lineWidth=1;
@@ -178,4 +182,6 @@ function onTouch(evt) {
 //var Y=_canvasPenJS(d,'rgba(255,0,0,1)',2,false);
 //Y();
 //var Y=_canvasPenJS(d,'rgba(0,0,255,1)',10,true);
+//Y();
+//var Y=_canvasPenJS(d,'rgba(0,0,255,1)',10,"-123.555@+3.14");
 //Y();
