@@ -11,9 +11,9 @@
 * rgba: color
 * w: line width
 * plot: true|false; true => plotting, false => drawing
+* >- plot can be a text: a pair of values with @.
+* >- this pair of values are expressed as "x@y" e.g., "1@2", "10.5@100.31".
 <ToDo>
-* - plot can be a text: csv formatted pairs of values with @.
-* - a pair of values are expressed as "x@y" e.g., "1@2", "10.5@100.31".
 - minimum version
 </ToDo>
 * === returned value ===
