@@ -18,7 +18,7 @@
 </ToDo>
 * === returned value ===
 * function that removes the set drawing/plotting interface
-* and returns log object: {time:string,d:[]}.
+* and returns log object: {time:string,d:[],canvasId:id of canvas}.
 */
 function _canvasPenJS(canvas,rgba,w,plot){
   //============================================================================
