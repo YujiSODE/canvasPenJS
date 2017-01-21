@@ -19,13 +19,13 @@ ______
 * `rgba`: color
 * `w`: line width
 * `plot`: `true`|`false`; `true`=> plotting, `false`=> drawing.  
-  `plot`\(=`true`\) can be a text: a pair of values with @, expressed as "x@y" e.g., "1@2", "10.5@100.31".
+  `plot`\(=`true`\) can be a text: a pair of values with @, expressed as "_x_@_y_" e.g., "1@2", "10.5@100.31".
 
 ###Returned value
 Function that removes set drawing/plotting interface, and returns log object.  
 This log object has:
 * `time`: timestamp
-* `d`: []
+* `d`: an array of plots, expressed with _x_ and _y_ coordinates: "_x_@_y_".
 * `canvasId`: id of canvas
 
 >##ToDo
