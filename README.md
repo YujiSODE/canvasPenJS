@@ -18,10 +18,13 @@ __Examples__
 0) `var y,d=window.document.getElementsByTagName('canvas')[0];`
 
 1) \[Set __drawing__\]:`y=_canvasPenJS(d,'rgba(255,0,0,1)',2,false);`  
-2) \[Remove set interface for __drawing__\]:`y();`
+2) \[Remove set interface for __drawing__, and get log\]:`y();`
 
 1) \[Set __plotting__\]:`y=_canvasPenJS(d,'rgba(0,0,255,1)',10,true);`  
-2) \[Remove set interface for __plotting__\]:`y();`  
+2) \[Remove set interface for __plotting__, and get log\]:`y();`  
+
+1) \[Set __plotting with data__\]:`y=_canvasPenJS(d,'rgba(255,0,255,1)',10,"20@+13.14");`  
+2) \[Get log\]:`y();`
 
 ##Parameters
 * `canvas`: target canvas tag
