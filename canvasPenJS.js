@@ -188,11 +188,11 @@ function touch2MouseEvt(e){
     };
   }
 }
-//=== test examples ===
+//=== examples ===
 //var d=window.document.getElementsByTagName('canvas')[0];
 //var Y=_canvasPenJS(d,'rgba(255,0,0,1)',2,false);
 //Y();
 //var Y=_canvasPenJS(d,'rgba(0,0,255,1)',10,true);
 //Y();
-//var Y=_canvasPenJS(d,'rgba(255,0,255,1)',10,"20@+3.14");
+//var Y=_canvasPenJS(d,'rgba(255,0,255,1)',10,"20@+13.14");
 //Y();
