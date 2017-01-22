@@ -10,9 +10,9 @@ ______
 ##Script
 * `canvasPenJS.js`
 * `canvasPenJS_min.js`  
-  this is minimum white spaces and comments version of `canvasPenJS.js`
+  This is minimum white spaces and comments version of "`canvasPenJS.js`".
 * `canvasPenJS_usingMDNCodeSamples.js`  
-  if `canvasPenJS.js` does not work, please try to use this instead.
+  If "`canvasPenJS.js`" does not work, please try to use this instead.
 
 ##How to use
 * Call "`_canvasPenJS(canvas,rgba,w,plot)`" in a html file with img/canvas tag.
