@@ -42,6 +42,3 @@ This log object has:
 * `time`: timestamp
 * `d`: an array of plots, expressed with _x_ and _y_ coordinates: "_x_@_y_".
 * `canvasId`: id of canvas
-
->##ToDo
->- minimum version
