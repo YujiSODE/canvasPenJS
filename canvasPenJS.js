@@ -13,9 +13,6 @@
 * plot: true|false; true => plotting, false => drawing
 * >- plot can be a text: a pair of values with @.
 * >- this pair of values are expressed as "x@y" e.g., "1@2", "10.5@100.31".
-<ToDo>
-- minimum version
-</ToDo>
 * === returned value ===
 * function that removes the set drawing/plotting interface
 * and returns log object: {time:string,d:[],canvasId:id of canvas}.
