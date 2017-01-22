@@ -46,7 +46,7 @@ function touch2MouseEvt(e){
   //e is event object
   e.preventDefault();
   if(!!e.changedTouches&&e.changedTouches.length>0){
-    var touch0=null,
+    var touch0=e.changedTouches[0],
         /*function simulates new mouse event*/
         newMEvt=function(EventName,tObj,tgt){
           //tObj and tgt are touch object and target element
@@ -61,15 +61,12 @@ function touch2MouseEvt(e){
         };
     switch(e.type){
       case 'touchstart':
-        touch0=e.changedTouches[0];
         newMEvt('mousedown',touch0,e.target);
         break;
       case 'touchmove':
-        touch0=e.changedTouches[0];
         newMEvt('mousemove',touch0,e.target);
         break;
       case 'touchend':
-        touch0=e.changedTouches[0];
         newMEvt('mouseup',touch0,e.target);
         break;
     }
