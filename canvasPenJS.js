@@ -111,9 +111,8 @@ function touch2MouseEvt(e){
   }else if(!!plotFlg){
     //=== plotting ===
     //plotting with data: x@y
-    var pltData=function(cvsTg,data){
-      //cvsTg: target canvas tag
-      //data: a pair of values are expressed as "x@y" e.g., "1@2", "10.5@100.31".
+    var pltData=function(){
+      //plot: a pair of values are expressed as "x@y" e.g., "1@2", "10.5@100.31".
       c=cvs.getContext('2d'),c.strokeStyle=rgba,c.lineWidth=w;
       x=+plot.split(/@/)[0],y=+plot.split(/@/)[1];
       c.strokeRect(x,y,1,1);
@@ -159,7 +158,7 @@ function touch2MouseEvt(e){
     //=== plotting ===
     //plotting with data: x@y
     log.d=[],log.time='plotting with data (x@y):'+slf.Date().replace(/\s/g,'_');
-    pltData('tgtcvas,data');
+    pltData();
     //returned function
     return function(){
       //reset strokeStyle and lineWidth
