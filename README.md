@@ -15,7 +15,7 @@ ______
   If "`canvasPenJS.js`" does not work, please try to use this instead.
 
 ##How to use
-* Call "`_canvasPenJS(canvas,rgba,w,plot)`" in a html file with img/canvas tag.
+* Call "`_canvasPenJS(canvas,rgba,w,plot)`" in a html file with canvas tag.
 
 __Examples__  
 0) `var y,d=window.document.getElementsByTagName('canvas')[0];`
