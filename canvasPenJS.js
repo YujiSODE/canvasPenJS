@@ -13,9 +13,6 @@
 * plot: true|false; true => plotting, false => drawing
 * >- plot can be a text: a pair of values with @.
 * >- this pair of values are expressed as "x@y" e.g., "1@2", "10.5@100.31".
-<ToDo>
-- minimum version
-</ToDo>
 * === returned value ===
 * function that removes the set drawing/plotting interface
 * and returns log object: {time:string,d:[],canvasId:id of canvas}.
@@ -46,7 +43,7 @@ function touch2MouseEvt(e){
   //e is event object
   e.preventDefault();
   if(!!e.changedTouches&&e.changedTouches.length>0){
-    var touch0=null,
+    var touch0=e.changedTouches[0],
         /*function simulates new mouse event*/
         newMEvt=function(EventName,tObj,tgt){
           //tObj and tgt are touch object and target element
@@ -61,15 +58,12 @@ function touch2MouseEvt(e){
         };
     switch(e.type){
       case 'touchstart':
-        touch0=e.changedTouches[0];
         newMEvt('mousedown',touch0,e.target);
         break;
       case 'touchmove':
-        touch0=e.changedTouches[0];
         newMEvt('mousemove',touch0,e.target);
         break;
       case 'touchend':
-        touch0=e.changedTouches[0];
         newMEvt('mouseup',touch0,e.target);
         break;
     }
@@ -114,9 +108,8 @@ function touch2MouseEvt(e){
   }else if(!!plotFlg){
     //=== plotting ===
     //plotting with data: x@y
-    var pltData=function(cvsTg,data){
-      //cvsTg: target canvas tag
-      //data: a pair of values are expressed as "x@y" e.g., "1@2", "10.5@100.31".
+    var pltData=function(){
+      //plot: a pair of values are expressed as "x@y" e.g., "1@2", "10.5@100.31".
       c=cvs.getContext('2d'),c.strokeStyle=rgba,c.lineWidth=w;
       x=+plot.split(/@/)[0],y=+plot.split(/@/)[1];
       c.strokeRect(x,y,1,1);
@@ -162,7 +155,7 @@ function touch2MouseEvt(e){
     //=== plotting ===
     //plotting with data: x@y
     log.d=[],log.time='plotting with data (x@y):'+slf.Date().replace(/\s/g,'_');
-    pltData('tgtcvas,data');
+    pltData();
     //returned function
     return function(){
       //reset strokeStyle and lineWidth

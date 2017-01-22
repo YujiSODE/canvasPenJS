@@ -9,10 +9,13 @@ ______
 
 ##Script
 * `canvasPenJS.js`
-* `canvasPenJS_usingMDNCodeSamples.js`
+* `canvasPenJS_min.js`  
+  This is minimum white spaces and comments version of "`canvasPenJS.js`".
+* `canvasPenJS_usingMDNCodeSamples.js`  
+  If "`canvasPenJS.js`" does not work, please try to use this instead.
 
 ##How to use
-* Call "`_canvasPenJS(canvas,rgba,w,plot)`" in a html file with img/canvas tag.
+* Call "`_canvasPenJS(canvas,rgba,w,plot)`" in a html file with canvas tag.
 
 __Examples__  
 0) `var y,d=window.document.getElementsByTagName('canvas')[0];`
@@ -39,6 +42,3 @@ This log object has:
 * `time`: timestamp
 * `d`: an array of plots, expressed with _x_ and _y_ coordinates: "_x_@_y_".
 * `canvasId`: id of canvas
-
->##ToDo
->- minimum version
